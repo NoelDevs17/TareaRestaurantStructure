@@ -18,14 +18,14 @@ namespace Restaurante.Api.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
+        [HttpGet("GetFacturas")]
         public async Task<ActionResult<IEnumerable<FacturaModel>>> GetFacturas()
         {
             var facturas = await _repository.GetAll();
             return Ok(facturas.ToModels());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetFacturasById{id}")]
         public async Task<ActionResult<FacturaModel>> GetFactura(int id)
         {
             var factura = await _repository.GetById(id);
@@ -36,7 +36,7 @@ namespace Restaurante.Api.Controllers
             return Ok(factura.ToModel());
         }
 
-        [HttpPost]
+        [HttpPost("CreateFactura")]
         public async Task<ActionResult> CreateFactura(FacturaModel facturaModel)
         {
             var factura = facturaModel.ToEntity();
@@ -44,7 +44,7 @@ namespace Restaurante.Api.Controllers
             return CreatedAtAction(nameof(GetFactura), new { id = factura.IdFactura }, facturaModel);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateFactura(int id, FacturaModel facturaModel)
         {
             if (id != facturaModel.IdFactura)
@@ -57,7 +57,7 @@ namespace Restaurante.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteFactura(int id)
         {
             await _repository.Delete(id);

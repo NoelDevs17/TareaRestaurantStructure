@@ -17,14 +17,14 @@ namespace Restaurante.Api.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
+        [HttpGet("GetClientes")]
         public async Task<ActionResult<IEnumerable<ClienteModel>>> GetClientes()
         {
             var clientes = await _repository.GetAll();
             return Ok(clientes.ToModels());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetClientesById{id}")]
         public async Task<ActionResult<ClienteModel>> GetCliente(int id)
         {
             var cliente = await _repository.GetById(id);
@@ -35,7 +35,7 @@ namespace Restaurante.Api.Controllers
             return Ok(cliente.ToModel());
         }
 
-        [HttpPost]
+        [HttpPost("CreateCliente")]
         public async Task<ActionResult> CreateCliente(ClienteModel clienteModel)
         {
             var cliente = clienteModel.ToEntity();
@@ -43,7 +43,7 @@ namespace Restaurante.Api.Controllers
             return CreatedAtAction(nameof(GetCliente), new { id = cliente.Id }, clienteModel);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateCliente(int id, ClienteModel clienteModel)
         {
             if (id != clienteModel.Id)
@@ -56,7 +56,7 @@ namespace Restaurante.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteCliente(int id)
         {
             await _repository.Delete(id);

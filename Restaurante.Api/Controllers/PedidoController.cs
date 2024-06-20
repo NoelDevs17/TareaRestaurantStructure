@@ -18,14 +18,24 @@ namespace Restaurante.Api.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
+        [HttpGet("GetPedidos")]
         public async Task<ActionResult<IEnumerable<PedidoModel>>> GetPedidos()
         {
             var pedidos = await _repository.GetAll();
-            return Ok(pedidos.ToModels());
+            var pedidoModels = pedidos.Select(p => new PedidoModel
+            {
+                IdPedido = p.IdPedido,
+                IdCliente = p.IdCliente,
+                ClienteNombre = p.Cliente?.Nombre,
+                IdMesa = p.IdMesa,
+                MesaCapacidad = p.Mesa?.Capacidad,
+                Fecha = p.Fecha,
+                Total = p.Total
+            });
+            return Ok(pedidoModels);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetPedidosById/{id}")]
         public async Task<ActionResult<PedidoModel>> GetPedido(int id)
         {
             var pedido = await _repository.GetById(id);
@@ -33,10 +43,20 @@ namespace Restaurante.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(pedido.ToModel());
+            var pedidoModel = new PedidoModel
+            {
+                IdPedido = pedido.IdPedido,
+                IdCliente = pedido.IdCliente,
+                ClienteNombre = pedido.Cliente?.Nombre,
+                IdMesa = pedido.IdMesa,
+                MesaCapacidad = pedido.Mesa?.Capacidad,
+                Fecha = pedido.Fecha,
+                Total = pedido.Total
+            };
+            return Ok(pedidoModel);
         }
 
-        [HttpPost]
+        [HttpPost("CreatePedido")]
         public async Task<ActionResult> CreatePedido(PedidoModel pedidoModel)
         {
             var pedido = pedidoModel.ToEntity();
@@ -44,7 +64,7 @@ namespace Restaurante.Api.Controllers
             return CreatedAtAction(nameof(GetPedido), new { id = pedido.IdPedido }, pedidoModel);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("UpdatePedido/{id}")]
         public async Task<IActionResult> UpdatePedido(int id, PedidoModel pedidoModel)
         {
             if (id != pedidoModel.IdPedido)
@@ -57,7 +77,7 @@ namespace Restaurante.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeletePedido(int id)
         {
             await _repository.Delete(id);

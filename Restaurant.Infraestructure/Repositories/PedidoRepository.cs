@@ -17,7 +17,10 @@ namespace Restaurant.Infraestructure.Repositories__Manager_del_equipo__organiza_
 
         public async Task<IEnumerable<Pedido>> GetAll()
         {
-            return await _context.Pedidos.ToListAsync();
+            return await _context.Pedidos
+                       .Include(p => p.Cliente)
+                       .Include(p => p.Mesa)
+                       .ToListAsync();
         }
 
         public async Task<Pedido> GetById(int id)
@@ -33,8 +36,10 @@ namespace Restaurant.Infraestructure.Repositories__Manager_del_equipo__organiza_
 
         public async Task Update(Pedido entity)
         {
-            _context.Pedidos.Update(entity);
-            await _context.SaveChangesAsync();
+            return await _context.Pedidos
+            .Include(p => p.Cliente)
+            .Include(p => p.Mesa)
+            .FirstOrDefaultAsync(p => p.IdPedido == id);
         }
 
         public async Task Delete(int id)

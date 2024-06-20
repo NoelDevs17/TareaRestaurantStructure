@@ -10,8 +10,11 @@ namespace Restaurant.Infraestructure.Models__Tarjeta_de_jugadores__muestra_infor
     {
         public int IdPedido { get; set; }
         public int IdCliente { get; set; }
+        public string ClienteNombre { get; set; }
         public int IdMesa { get; set; }
+        public int? MesaCapacidad { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
     }
+
 }

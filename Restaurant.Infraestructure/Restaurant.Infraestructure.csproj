@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Exceptions%28Arbitro, maneja reglas y errores%29\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>
