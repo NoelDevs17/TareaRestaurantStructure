@@ -36,18 +36,24 @@ namespace Restaurant.Infraestructure.Repositories__Manager_del_equipo__organiza_
 
         public async Task Update(Pedido entity)
         {
-            return await _context.Pedidos
-            .Include(p => p.Cliente)
-            .Include(p => p.Mesa)
-            .FirstOrDefaultAsync(p => p.IdPedido == id);
+            var existingPedido = await _context.Pedidos
+        .Include(p => p.Cliente)
+        .Include(p => p.Mesa)
+        .FirstOrDefaultAsync(p => p.IdPedido == entity.IdPedido);
+
+            if (existingPedido != null)
+            {
+                _context.Entry(existingPedido).CurrentValues.SetValues(entity);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task Delete(int id)
         {
-            var pedidos = await _context.Pedidos.FindAsync(id);
-            if (pedidos != null)
+            var pedido = await _context.Pedidos.FindAsync(id);
+            if (pedido != null)
             {
-                _context.Pedidos.Remove(pedidos);
+                _context.Pedidos.Remove(pedido);
                 await _context.SaveChangesAsync();
             }
         }

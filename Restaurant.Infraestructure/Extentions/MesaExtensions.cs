@@ -12,7 +12,7 @@ namespace Restaurant.Infraestructure.Extentions_Entramientos_Especiales_para_sub
             return new MesaModel
             {
                 IdMesa = mesa.IdMesa,
-                Capacidad = int.TryParse(mesa.Capacidad, out var capacidad) ? capacidad : default,
+                Capacidad = mesa.Capacidad,
                 Estado = mesa.Estado
             };
         }
@@ -22,7 +22,7 @@ namespace Restaurant.Infraestructure.Extentions_Entramientos_Especiales_para_sub
             return new Mesa
             {
                 IdMesa = mesaModel.IdMesa,
-                Capacidad = mesaModel.Capacidad.ToString(),
+                Capacidad = mesaModel.Capacidad,
                 Estado = mesaModel.Estado
             };
         }

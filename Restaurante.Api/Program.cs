@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Restaurant.Application.Services;
 using Restaurant.Domain.Entities;
 using Restaurant.Infraestructure.Context;
 using Restaurant.Infraestructure.Interfaces;
@@ -10,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddScoped<IPedidoService, PedidoService>();
+
 
 // AddDbContext configuration
 builder.Services.AddDbContext<MyDbContext>(options =>
