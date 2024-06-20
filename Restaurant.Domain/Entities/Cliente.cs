@@ -8,5 +8,8 @@ namespace Restaurant.Domain.Entities
     {
         public string? Telefono { get; set; }
         public string? Email { get; set; }
+
+        // Propiedad de navegación
+        public ICollection<Pedido> Pedidos { get; set; }
     }
 }
