@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Restaurant.Domain.Entities;
 using Restaurant.Infraestructure.Context;
 using Restaurant.Infraestructure.Interfaces;
@@ -8,11 +9,12 @@ using Restaurant.Infraestructure.Repositories__Manager_del_equipo__organiza_el_e
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
 
+// AddDbContext configuration
+builder.Services.AddDbContext<MyDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//Configuracion DbContext
-builder.Services.AddDbContext<MyDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 // Registro de los repositorios
@@ -25,7 +27,7 @@ builder.Services.AddScoped<IRepository<DetallePedido>, DetallePedidoRepository>(
 builder.Services.AddScoped<IRepository<Factura>, FacturaRepository>();
 
 
-builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

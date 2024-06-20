@@ -11,5 +11,7 @@ namespace Restaurant.Domain.Entities
         public string? Descripcion { get; set; }
         public decimal? Precio { get; set; }
         public string? Categoria { get; set; }
+        // Propiedad de navegación
+        public ICollection<DetallePedido> DetallePedidos { get; set; }
     }
 }

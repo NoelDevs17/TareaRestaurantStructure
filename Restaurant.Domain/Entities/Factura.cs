@@ -7,5 +7,8 @@ namespace Restaurant.Domain.Entities
         public int? IdPedido { get; set; }
         public decimal? Total { get; set; }
         public DateTime Fecha { get; set; } = DateTime.Now;
+
+        //Propiedades de Navegacion
+        public Pedido Pedido { get; set; }
     }
 }
