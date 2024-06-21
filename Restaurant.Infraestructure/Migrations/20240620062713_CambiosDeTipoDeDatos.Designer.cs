@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant.Infraestructure.Context;
 
@@ -11,9 +12,10 @@ using Restaurant.Infraestructure.Context;
 namespace Restaurant.Infraestructure.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240620062713_CambiosDeTipoDeDatos")]
+    partial class CambiosDeTipoDeDatos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,7 +189,7 @@ namespace Restaurant.Infraestructure.Migrations
                     b.Property<int>("IdMesa")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Total")
+                    b.Property<decimal?>("Total")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IdPedido");
@@ -202,7 +204,7 @@ namespace Restaurant.Infraestructure.Migrations
             modelBuilder.Entity("Restaurant.Domain.Entities.DetallePedido", b =>
                 {
                     b.HasOne("Restaurant.Domain.Entities.Pedido", "Pedido")
-                        .WithMany("DetallesPedido")
+                        .WithMany("DetallePedidos")
                         .HasForeignKey("IdPedido")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -263,7 +265,7 @@ namespace Restaurant.Infraestructure.Migrations
 
             modelBuilder.Entity("Restaurant.Domain.Entities.Pedido", b =>
                 {
-                    b.Navigation("DetallesPedido");
+                    b.Navigation("DetallePedidos");
 
                     b.Navigation("Facturas");
                 });

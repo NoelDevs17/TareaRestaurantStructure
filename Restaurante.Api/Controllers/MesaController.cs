@@ -18,14 +18,14 @@ namespace Restaurante.Api.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
+        [HttpGet("GetMesas")]
         public async Task<ActionResult<IEnumerable<MesaModel>>> GetMesas()
         {
             var mesas = await _repository.GetAll();
             return Ok(mesas.ToModels());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetMesasById/{id}")]
         public async Task<ActionResult<MesaModel>> GetMesa(int id)
         {
             var mesa = await _repository.GetById(id);
@@ -36,7 +36,7 @@ namespace Restaurante.Api.Controllers
             return Ok(mesa.ToModel());
         }
 
-        [HttpPost]
+        [HttpPost("CreateMesa")]
         public async Task<ActionResult> CreateMesa(MesaModel mesaModel)
         {
             var mesa = mesaModel.ToEntity();
@@ -44,7 +44,7 @@ namespace Restaurante.Api.Controllers
             return CreatedAtAction(nameof(GetMesa), new { id = mesa.IdMesa }, mesaModel);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("UpdateMesa/{id}")]
         public async Task<IActionResult> UpdateMesa(int id, MesaModel mesaModel)
         {
             if (id != mesaModel.IdMesa)
@@ -57,7 +57,7 @@ namespace Restaurante.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteMesa(int id)
         {
             await _repository.Delete(id);

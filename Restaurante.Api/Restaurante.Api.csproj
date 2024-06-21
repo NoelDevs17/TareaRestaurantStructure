@@ -16,10 +16,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Restaurant.Application\Restaurant.Application.csproj" />
     <ProjectReference Include="..\Restaurant.Domain\Restaurant.Domain.csproj" />
     <ProjectReference Include="..\Restaurant.Infraestructure\Restaurant.Infraestructure.csproj" />
   </ItemGroup>
