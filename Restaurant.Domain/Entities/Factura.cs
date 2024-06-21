@@ -8,7 +8,8 @@ namespace Restaurant.Domain.Entities
         public decimal? Total { get; set; }
         public DateTime Fecha { get; set; } = DateTime.Now;
 
-        //Propiedades de Navegacion
+        // Navegación
         public Pedido Pedido { get; set; }
+
     }
 }

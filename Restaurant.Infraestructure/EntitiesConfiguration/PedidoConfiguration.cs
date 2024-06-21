@@ -20,7 +20,7 @@ namespace Restaurant.Infraestructure.EntitiesConfiguration
                    .WithMany(m => m.Pedidos)
                    .HasForeignKey(p => p.IdMesa);
 
-            builder.HasMany(p => p.DetallePedidos)
+            builder.HasMany(p => p.DetallesPedido)
                    .WithOne(d => d.Pedido)
                    .HasForeignKey(d => d.IdPedido);
         }

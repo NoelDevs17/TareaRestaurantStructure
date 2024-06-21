@@ -17,7 +17,7 @@ namespace Restaurant.Infraestructure.EntitiesConfiguration
                    .HasColumnType("decimal(18,2)");
 
             builder.HasOne(d => d.Pedido)
-                   .WithMany(p => p.DetallePedidos)
+                   .WithMany(p => p.DetallesPedido)
                    .HasForeignKey(d => d.IdPedido);
 
             builder.HasOne(d => d.Menu)

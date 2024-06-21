@@ -15,6 +15,7 @@ namespace Restaurant.Infraestructure.Models__Tarjeta_de_jugadores__muestra_infor
         public int? MesaCapacidad { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
+        public List<DetallePedidoModel> DetallesPedido { get; set; }
     }
 
 }

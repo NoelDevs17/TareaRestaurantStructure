@@ -11,5 +11,6 @@ namespace Restaurant.Application.Services
     {
         Task<IEnumerable<PedidoModel>> GetPedidosAsync();
         Task<PedidoModel> GetPedidoByIdAsync(int id);
+        Task<PedidoModel> CreatePedidoAsync(PedidoModel pedidoModel);
     }
 }

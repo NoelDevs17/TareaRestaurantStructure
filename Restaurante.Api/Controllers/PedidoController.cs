@@ -23,14 +23,15 @@ namespace Restaurante.Api.Controllers
         }
 
         [HttpGet("GetPedidos")]
-        public async Task<ActionResult<IEnumerable<PedidoModel>>> GetPedidos()
+        public async Task<IActionResult> GetPedidos()
         {
             var pedidos = await _pedidoService.GetPedidosAsync();
             return Ok(pedidos);
         }
 
+
         [HttpGet("GetPedidosById/{id}")]
-        public async Task<ActionResult<PedidoModel>> GetPedido(int id)
+        public async Task<IActionResult> GetPedidoById(int id)
         {
             var pedido = await _pedidoService.GetPedidoByIdAsync(id);
             if (pedido == null)
@@ -41,11 +42,15 @@ namespace Restaurante.Api.Controllers
         }
 
         [HttpPost("CreatePedido")]
-        public async Task<ActionResult> CreatePedido(PedidoModel pedidoModel)
+        public async Task<IActionResult> CreatePedido([FromBody] PedidoModel pedido)
         {
-            var pedido = pedidoModel.ToEntity();
-            await _repository.Add(pedido);
-            return CreatedAtAction(nameof(GetPedido), new { id = pedido.IdPedido }, pedidoModel);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var createdPedido = await _pedidoService.CreatePedidoAsync(pedido);
+            return CreatedAtAction(nameof(GetPedidoById), new { id = createdPedido.IdPedido }, createdPedido);
         }
 
         [HttpPut("UpdatePedido/{id}")]

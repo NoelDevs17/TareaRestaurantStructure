@@ -9,12 +9,11 @@ namespace Restaurant.Domain.Entities
         public int IdCliente { get; set; }
         public int IdMesa { get; set; }
         public DateTime Fecha { get; set; }
-        public decimal? Total { get; set; }
-
-        public Cliente Cliente { get; set; } // Propiedad de navegacion a Cliente
-        public Mesa Mesa { get; set; } // Propiedad de navegacion a Mesa
-        public ICollection<DetallePedido> DetallePedidos { get; set; }
-        public ICollection<Factura> Facturas { get; set; }
+        public decimal Total { get; set; }
+        public Cliente Cliente { get; set; } // Agregar propiedad de navegación si es necesaria
+        public Mesa Mesa { get; set; } // Agregar propiedad de navegación si es necesaria
+        public List<DetallePedido> DetallesPedido { get; set; } // Agregar propiedad de navegación si es necesaria
+        public ICollection<Factura> Facturas { get; set; } // Asegúrate de incluir esto
 
     }
 }

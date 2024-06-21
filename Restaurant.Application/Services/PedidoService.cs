@@ -14,7 +14,25 @@ namespace Restaurant.Application.Services
         {
             _repository = repository;
         }
+        public async Task<PedidoModel> CreatePedidoAsync(PedidoModel pedidoModel)
+        {
+            var pedido = new Pedido
+            {
+                IdCliente = pedidoModel.IdCliente,
+                IdMesa = pedidoModel.IdMesa,
+                Fecha = pedidoModel.Fecha,
+                Total = pedidoModel.Total,
+                DetallesPedido = pedidoModel.DetallesPedido.Select(d => new DetallePedido
+                {
+                    IdPlato = d.IdPlato,
+                    Cantidad = d.Cantidad,
+                    Subtotal = d.Subtotal
+                }).ToList()
+            };
 
+            await _repository.Add(pedido);
+            return  pedidoModel;
+        }
         public async Task<IEnumerable<PedidoModel>> GetPedidosAsync()
         {
             var pedidos = await _repository.GetAll();
@@ -24,9 +42,9 @@ namespace Restaurant.Application.Services
                 IdCliente = p.IdCliente,
                 ClienteNombre = p.Cliente?.Nombre,
                 IdMesa = p.IdMesa,
-                MesaCapacidad = p.Mesa?.Capacidad,
+                MesaCapacidad = p.Mesa?.Capacidad, // No es necesario el cambio de tipo
                 Fecha = p.Fecha,
-                Total = p.Total ?? 0M // Convertir explicitamente a decimal
+                Total = p.Total
             });
         }
 
@@ -37,15 +55,16 @@ namespace Restaurant.Application.Services
             {
                 return null;
             }
+
             return new PedidoModel
             {
                 IdPedido = pedido.IdPedido,
                 IdCliente = pedido.IdCliente,
                 ClienteNombre = pedido.Cliente?.Nombre,
                 IdMesa = pedido.IdMesa,
-                MesaCapacidad = pedido.Mesa?.Capacidad,
+                MesaCapacidad = pedido.Mesa?.Capacidad, // No es necesario el cambio de tipo
                 Fecha = pedido.Fecha,
-                Total = pedido.Total ?? 0M // Convertir explicitamente a decimal
+                Total = pedido.Total
             };
         }
     }
